@@ -1,0 +1,9 @@
+# These files and directories should be ignored!
+
+
+# Local terraform directories
+.terraform/*
+
+# State files
+*.tfstate
+*.tfstate.backup
