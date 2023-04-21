@@ -1,6 +1,6 @@
 resource "aws_instance" "Webserver" {
-    ami = "ami-0a04068a95e6a1cde"
-    instance_type = "t2.small"
+    ami = "${var.ami}"
+    instance_type = "${var.instance_type}"
     vpc_security_group_ids = [aws_security_group.SG.id]
 
     user_data = <<-EOF
@@ -16,7 +16,7 @@ resource "aws_instance" "Webserver" {
 
     tags = {
         Name = "terraform-Webserver"
-        Description = "This is a Webserver created with Terraform IaC Tool."
+        Description = "This is a Webserver created with Terraform IaC Tool with the help Samuel and my Michael, my Boyz."
     }
 }
 
