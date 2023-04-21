@@ -5,8 +5,12 @@ resource "aws_instance" "Webserver" {
 
     user_data = <<-EOF
                 #!/bin/bash
-                echo "Hello, World" > index.html
-                nohup busybox httpd -f -p 8080 &
+                sudo dnf update -y
+                sudo dnf install httpd -y
+                sudo systemctl enable httpd
+                sudo systemctl start httpd
+                #sudo echo "Hello, World" > /var/www/html/index.html
+                #sudo sed /var/www/html > /var/www/html/index.html           
                 EOF
     user_data_replace_on_change = true
 
@@ -21,13 +25,18 @@ resource "aws_security_group" "SG" {
   name        = "Terraform-Webserver-SG"
   
   ingress {
-    from_port        = 8080
-    to_port          = 8080
+    from_port        = var.server_port
+    to_port          = var.server_port
     protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
+  }  
 
-    
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
-
-}
+  
+ }
 
