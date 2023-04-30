@@ -1,7 +1,14 @@
+data "aws_key_pair" "Dev_KP_OH" {
+  key_name   = "Dev_KP_OH"
+  
+}
+
 resource "aws_instance" "Webserver" {
     ami = "${var.ami}"
     instance_type = "${var.instance_type}"
+    key_name = "Dev_KP_OH"
     vpc_security_group_ids = [aws_security_group.SG.id]
+    
 
     user_data = <<-EOF
                 #!/bin/bash
@@ -16,7 +23,7 @@ resource "aws_instance" "Webserver" {
 
     tags = {
         Name = "terraform-Webserver"
-        Description = "This is a Webserver created with Terraform IaC Tool with the help Samuel and my Michael, my Boyz."
+        Description = "This is a Webserver created with Terraform IaC Tool with the help of Samuel and Michael, my Boyz."
     }
 }
 
@@ -39,4 +46,13 @@ resource "aws_security_group" "SG" {
   }
   
  }
+
+ resource "aws_security_group_rule" "allow_ssh" {
+  type        = "ingress"
+  from_port   = 22
+  to_port     = 22
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.SG.id
+}
 

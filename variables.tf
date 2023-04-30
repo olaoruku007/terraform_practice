@@ -11,16 +11,10 @@ variable "ami" {
 }
 
 variable "instance_type" {
-    description = " The instance type to be used"
+    description = "The instance type to be used"
     type = string
     default = "t2.small"
 }
-
-
-
-
-
-
 
 variable "server_port" {
     description = " The port the server will use for http request"
