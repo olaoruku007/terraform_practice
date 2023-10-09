@@ -4,11 +4,11 @@ data "aws_key_pair" "Dev_KP_OH" {
 }
 
 resource "aws_instance" "Webserver" {
-    ami = "${var.ami}"
+    ami = "${var.ami[count.index]}" 
     instance_type = "${var.instance_type}"
     key_name = "Dev_KP_OH"
     vpc_security_group_ids = [aws_security_group.SG.id]
-    
+    count = length(var.ami)
 
     user_data = <<-EOF
                 #!/bin/bash

@@ -6,8 +6,8 @@ variable "region" {
 
 variable "ami" {
     description = " The ami to be used by the instance"
-    type = string
-    default = "ami-0a04068a95e6a1cde"
+    type = list(string)
+    default = ["ami-0a04068a95e6a1cde", "ami-0dbe8f888bb358007", "ami-0e534f3e5321ed9ed"]
 }
 
 variable "instance_type" {
